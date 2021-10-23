@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 
 namespace acr_main_api.Models
 {
-    public class Domain
+    public class Significative
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        List<Significative> Significatives { get; set; }
+        public int DomainId { get; set; }
+        public Domain Domain { get; set; }
+
+        List<Percentage> Percentages { get; set; }
     }
 }
