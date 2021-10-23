@@ -1,3 +1,4 @@
+using acr_main_api.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,6 +18,7 @@ namespace acr_main_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddDbContext<MainContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

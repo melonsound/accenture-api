@@ -14,6 +14,11 @@ namespace acr_main_api.Data
 
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(Config.DbConnectionString);
+        }
+
         public DbSet<Domain> Domains { get; set; }
     }
 }
