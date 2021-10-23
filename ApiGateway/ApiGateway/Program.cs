@@ -20,6 +20,10 @@ namespace ApiGateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+#if !DEBUG
+                    //(Optional) used for deployment heroku app
+                    webBuilder.UseUrls("http://*:" + Environment.GetEnvironmentVariable("PORT"));
+#endif
                     webBuilder.UseStartup<Startup>();
                     webBuilder.ConfigureAppConfiguration(config =>
                         config.AddJsonFile($"ocelot.json"));
