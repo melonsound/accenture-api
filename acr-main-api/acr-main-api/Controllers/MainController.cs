@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using acr_main_api.Data;
+using acr_main_api.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +14,22 @@ namespace acr_main_api.Controllers
     [ApiController]
     public class MainController : ControllerBase
     {
-        [HttpGet("main-table")]
-        public IActionResult GetTable()
-        {
+        private MainContext _ctx;
 
+        public MainController(MainContext mainContext)
+        {
+            _ctx = mainContext;
+        }
+
+        [HttpGet("main-table")]
+        public IActionResult GetDomains()
+        {
+            var query = _ctx.Domains
+                .Include(q => q.Significatives)
+                .ThenInclude(w => w.Percentages)
+                .SingleOrDefault(x => x.Id == 3);
+
+            return Ok(query);
         }
     }
 }
