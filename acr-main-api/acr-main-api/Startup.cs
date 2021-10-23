@@ -36,6 +36,15 @@ namespace acr_main_api
 
             app.UseRouting();
 
+            app.UseCors(builder =>
+            {
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .SetIsOriginAllowed(_ => true)
+                    .AllowCredentials();
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
