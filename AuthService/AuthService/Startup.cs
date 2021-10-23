@@ -8,19 +8,33 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.IdentityModel.JsonWebTokens;
+using AuthService.Services;
+using AuthService.Helpers;
 
 namespace AuthService
 {
     public class Startup
     {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            var authOptionsConfiguration = Configuration.GetSection("Auth");
+
+            services.Configure<AuthOptions>(authOptionsConfiguration);
+
+            services.AddControllers();
             services.AddDbContext<AccountContext>();
             var authKey = Encoding.ASCII.GetBytes(Config.AuthKey);
             services.AddAuthentication(x => 
@@ -40,6 +54,8 @@ namespace AuthService
                         ValidateAudience = false
                     };
                 });
+
+            services.AddTransient<AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,7 +70,7 @@ namespace AuthService
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context => { await context.Response.WriteAsync("Hello World!"); });
+                endpoints.MapControllers();
             });
         }
     }

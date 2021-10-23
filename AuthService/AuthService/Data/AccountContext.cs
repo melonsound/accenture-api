@@ -1,5 +1,9 @@
 ﻿using AuthService.Models;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AuthService.Data
 {
@@ -9,7 +13,12 @@ namespace AuthService.Data
         {
             
         }
-        
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseNpgsql(Config.DbConnectionString);
+        }
+
         public DbSet<Account> Accounts { get; set; }
     }
 }
