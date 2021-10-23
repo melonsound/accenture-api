@@ -20,5 +20,7 @@ namespace acr_main_api.Data
         }
 
         public DbSet<Domain> Domains { get; set; }
+        public DbSet<Percentage> Percentages { get; set; }
+        public DbSet<Significative> Significatives { get; set; }
     }
 }

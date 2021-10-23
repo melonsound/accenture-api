@@ -13,6 +13,6 @@ namespace acr_main_api.Models
         public int DomainId { get; set; }
         public Domain Domain { get; set; }
 
-        List<Percentage> Percentages { get; set; }
+        public List<Percentage> Percentages { get; set; }
     }
 }

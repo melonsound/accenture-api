@@ -10,6 +10,6 @@ namespace acr_main_api.Models
         public int Id { get; set; }
         public string Name { get; set; }
 
-        List<Significative> Significatives { get; set; }
+        public List<Significative> Significatives { get; set; }
     }
 }
